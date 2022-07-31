@@ -38,6 +38,6 @@ jobs:
 
       # TODO: infrastructure for integration tests with docker-compose
 
-      - name: Run Unit Tests
-        run: mvn -B test
+#      - name: Run Unit Tests
+#        run: mvn -B test
 

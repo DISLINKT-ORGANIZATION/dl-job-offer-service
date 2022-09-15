@@ -4,6 +4,7 @@ import dislinkt.jobofferservice.security.TokenUtils;
 import dislinkt.jobofferservice.security.auth.RestAuthenticationEntryPoint;
 import dislinkt.jobofferservice.security.auth.TokenAuthenticationFilter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -19,6 +20,9 @@ import org.springframework.security.web.authentication.www.BasicAuthenticationFi
 @Configuration
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
+	
+	@Value("${auth-service.address}")
+    private String authServiceAddress;
 
     @Autowired
     private EncoderConfig encoderConfig;
@@ -47,7 +51,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/job-offer/**").permitAll()
                 .anyRequest().authenticated().and()
-                .addFilterBefore(new TokenAuthenticationFilter(tokenUtils), BasicAuthenticationFilter.class);
+                .addFilterBefore(new TokenAuthenticationFilter(tokenUtils, authServiceAddress), BasicAuthenticationFilter.class);
 //			.cors().configurationSource(request -> config)
         http.csrf().disable();
     }

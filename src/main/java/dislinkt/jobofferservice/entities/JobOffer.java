@@ -28,7 +28,7 @@ public class JobOffer {
 	@NonNull
 	private String title;
 
-	@Column(name = "description", unique = false, nullable = false)
+	@Column(name = "description", unique = false, nullable = false, columnDefinition="TEXT")
 	@NonNull
 	private String description;
 
